@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — HomeBites</title>
+  <meta name="description" content="HomeBites Privacy Policy — how we collect, use and protect your data." />
+  <link rel="icon" href="assets/mascot.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary:       #FF8C61;
+      --primary-dark:  #E85D3F;
+      --primary-light: #FFD4C2;
+      --secondary:     #8FB996;
+      --secondary-dark:#6B9B73;
+      --accent:        #FFC857;
+      --bg:            #FFF8F3;
+      --surface:       #FFFFFF;
+      --surface-warm:  #F5EDE6;
+      --text:          #2D3748;
+      --text-muted:    #718096;
+      --radius:        16px;
+      --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(255,248,243,0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: var(--primary-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary); color: #fff;
+      border: none; border-radius: 50px; padding: 10px 24px;
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px;
+      cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(255,140,97,0.35);
+      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,140,97,0.45); }
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 140px 48px 80px;
+      background: linear-gradient(135deg, #FFF8F3 0%, #FFD4C2 50%, #C5E1C8 100%);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(255,200,150,0.3) 0%, transparent 70%);
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,140,97,0.12); border: 1px solid rgba(255,140,97,0.3);
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 20px;
+      font-size: 13px; font-weight: 600; color: var(--primary-dark);
+    }
+    .page-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 16px; }
+    .page-hero p { font-size: 17px; color: var(--text-muted); line-height: 1.7; }
+
+    /* CONTENT */
+    .legal-content {
+      max-width: 780px; margin: 0 auto; padding: 72px 48px 100px;
+    }
+    .legal-content .last-updated {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 48px;
+      padding: 12px 20px; background: var(--surface-warm); border-radius: 10px;
+      border-left: 4px solid var(--primary);
+    }
+    .legal-content h2 {
+      font-size: 22px; font-weight: 700; color: var(--text);
+      margin-top: 48px; margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 2px solid var(--primary-light);
+    }
+    .legal-content h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 10px; }
+    .legal-content p { font-size: 16px; line-height: 1.8; color: #4A5568; margin-bottom: 16px; }
+    .legal-content ul, .legal-content ol { padding-left: 24px; margin-bottom: 16px; }
+    .legal-content li { font-size: 16px; line-height: 1.8; color: #4A5568; margin-bottom: 8px; }
+    .legal-content a { color: var(--primary-dark); text-decoration: underline; }
+    .legal-content a:hover { color: var(--primary); }
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(255,140,97,0.08), rgba(143,185,150,0.08));
+      border: 1px solid rgba(255,140,97,0.2);
+      border-radius: var(--radius); padding: 24px 28px; margin: 32px 0;
+    }
+    .highlight-box p { margin-bottom: 0; }
+    @media (max-width: 768px) {
+      .page-hero { padding: 120px 24px 60px; }
+      .legal-content { padding: 48px 24px 80px; }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--text); color: rgba(255,255,255,0.75);
+      padding: 60px 48px 32px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
+    .footer-brand { max-width: 300px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+    .footer-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: #fff; }
+    .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); }
+    .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+    .footer-col h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--primary); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 14px; color: rgba(255,255,255,0.4); }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; transition: background 0.2s; }
+    .social-link:hover { background: rgba(255,140,97,0.25); }
+    @media (max-width: 768px) {
+      footer { padding: 48px 24px 24px; }
+      .footer-top { flex-direction: column; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/mascot.png" alt="HomeBites" />
+    <span>HomeBites</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#how">How it works</a>
+    <a href="about.html">About</a>
+    <a href="support.html">Support</a>
+  </div>
+  <a href="index.html#download" class="nav-cta">Download App</a>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p>We take your privacy seriously. This policy explains exactly what data HomeBites collects, why we collect it, and how you stay in control.</p>
+  </div>
+</section>
+
+<div class="legal-content">
+  <p class="last-updated">Last updated: May 21, 2025 &nbsp;·&nbsp; Effective: May 21, 2025</p>
+
+  <div class="highlight-box">
+    <p><strong>Short version:</strong> HomeBites only collects what's needed to personalise your meal planning. We never sell your data. AI chat conversations are processed by Google Gemini securely via our own backend proxy — your messages never go directly to Google from the app. You can delete your account and all associated data at any time.</p>
+  </div>
+
+  <h2>1. Who We Are</h2>
+  <p>HomeBites ("we", "us", "our") is an AI-powered meal planning application developed for Kenyan families. Our registered contact for data-related matters is:</p>
+  <p><strong>Email:</strong> <a href="mailto:hello@homebites.app">hello@homebites.app</a><br/>
+  <strong>App:</strong> HomeBites — available on iOS and Android</p>
+
+  <h2>2. Information We Collect</h2>
+
+  <h3>2.1 Information You Provide</h3>
+  <ul>
+    <li><strong>Account details:</strong> Email address and password (or Google/Apple sign-in token) when you create an account.</li>
+    <li><strong>Profile information:</strong> Name, household size, dietary preferences, cooking skill level, and budget range — used solely to personalise your meal plans.</li>
+    <li><strong>AI chat messages:</strong> Conversations with Mama AI that you initiate. These are sent to our secure Cloud Function, which forwards them to Google Gemini. We store your chat history in your private Firestore account so it persists across devices.</li>
+    <li><strong>Meal planning data:</strong> Recipes you save, your weekly meal plan, grocery lists, and cooking history.</li>
+    <li><strong>Budget data:</strong> Monthly budget amounts you enter and tracking records you create.</li>
+  </ul>
+
+  <h3>2.2 Information Collected Automatically</h3>
+  <ul>
+    <li><strong>App usage data:</strong> Screens visited, features used, and session length — collected via Firebase Analytics to help us improve the app.</li>
+    <li><strong>Crash reports:</strong> Crash logs collected via Firebase Crashlytics to identify and fix bugs.</li>
+    <li><strong>Device information:</strong> Device model, OS version, and app version for diagnostic purposes.</li>
+  </ul>
+
+  <h3>2.3 Information We Do NOT Collect</h3>
+  <ul>
+    <li>We do not collect your precise GPS location.</li>
+    <li>We do not access your contacts, camera, or microphone (unless you explicitly use a camera feature we add in a future update, which will be disclosed at that time).</li>
+    <li>We do not track your activity on other apps or websites.</li>
+    <li>We do not collect payment card information — HomeBites is free.</li>
+  </ul>
+
+  <h2>3. How We Use Your Information</h2>
+  <ul>
+    <li>To create and manage your HomeBites account.</li>
+    <li>To generate personalised Kenyan meal plans, recipe suggestions, and grocery lists.</li>
+    <li>To power Mama AI responses, using your chat history and household preferences as context.</li>
+    <li>To sync your data across devices (phone, tablet) via Firebase.</li>
+    <li>To improve the app's performance and fix bugs using aggregated, anonymised analytics.</li>
+    <li>To send important service notifications (e.g., app updates, security alerts) — we will never send marketing emails without your explicit opt-in.</li>
+  </ul>
+
+  <h2>4. How We Store and Protect Your Data</h2>
+  <p>Your personal data is stored in Google Firebase Firestore with the following protections:</p>
+  <ul>
+    <li><strong>Authentication-gated:</strong> Firestore security rules ensure each user can only read and write their own documents.</li>
+    <li><strong>Encrypted in transit:</strong> All data between the app and Firebase travels over TLS/HTTPS.</li>
+    <li><strong>Encrypted at rest:</strong> Firebase encrypts all stored data at rest by default.</li>
+    <li><strong>AI proxy security:</strong> Gemini API calls route through our Cloud Function backend. The API key is stored in Google Secret Manager and never shipped inside the app binary.</li>
+    <li><strong>Firebase Authentication tokens:</strong> Every request to our AI proxy is verified with a Firebase ID token, so only authenticated users can trigger AI calls.</li>
+  </ul>
+
+  <h2>5. Sharing Your Information</h2>
+  <p>We do not sell, rent, or trade your personal data. We share limited information only in these circumstances:</p>
+  <ul>
+    <li><strong>Google Firebase:</strong> Our infrastructure provider (Firestore, Authentication, Analytics, Crashlytics, Cloud Functions). Google processes data per their <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</li>
+    <li><strong>Google Gemini:</strong> AI chat content is processed by Google's Gemini API via our secure proxy. Prompts are sent without any personally identifying information attached.</li>
+    <li><strong>Legal requirements:</strong> If required by law, court order, or to protect the safety of our users, we may disclose information to relevant authorities.</li>
+  </ul>
+
+  <h2>6. Guest Mode</h2>
+  <p>HomeBites offers a Guest Mode that lets you use core features without creating an account. In Guest Mode:</p>
+  <ul>
+    <li>No account is created and no email is collected.</li>
+    <li>Your meal plans and preferences are stored locally on your device only.</li>
+    <li>AI features may be limited. Switching to a full account will not import your guest data.</li>
+  </ul>
+
+  <h2>7. Children's Privacy</h2>
+  <p>HomeBites is not directed at children under 13 years old. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us at <a href="mailto:hello@homebites.app">hello@homebites.app</a> and we will delete it promptly.</p>
+
+  <h2>8. Your Rights and Choices</h2>
+  <p>You have the following rights regarding your personal data:</p>
+  <ul>
+    <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+    <li><strong>Correction:</strong> Update incorrect or incomplete information via your Profile settings in the app.</li>
+    <li><strong>Deletion:</strong> Delete your account and all associated data from your Profile settings. Deletion is permanent and processed within 30 days.</li>
+    <li><strong>Portability:</strong> Request an export of your meal plans and preferences in a readable format.</li>
+    <li><strong>Opt-out of analytics:</strong> You may opt out of Firebase Analytics data collection by contacting us.</li>
+  </ul>
+  <p>To exercise any of these rights, email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a>.</p>
+
+  <h2>9. Data Retention</h2>
+  <p>We retain your personal data for as long as your account is active. If you delete your account, your Firestore documents (profile, meal plans, chat history, favorites) are permanently deleted within 30 days. Anonymised, aggregated analytics data may be retained indefinitely as it cannot identify you.</p>
+
+  <h2>10. Third-Party Links</h2>
+  <p>The app and website may contain links to third-party services (e.g., ingredient sourcing). We are not responsible for the privacy practices of those services. We encourage you to read their privacy policies before sharing any information.</p>
+
+  <h2>11. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. When we make significant changes, we will notify you via an in-app notice and update the "Last updated" date above. Continued use of the app after changes are posted constitutes acceptance of the updated policy.</p>
+
+  <h2>12. Contact Us</h2>
+  <p>If you have any questions about this Privacy Policy or your data, please reach out:</p>
+  <ul>
+    <li><strong>Email:</strong> <a href="mailto:hello@homebites.app">hello@homebites.app</a></li>
+    <li><strong>Support page:</strong> <a href="support.html">homebites.app/support</a></li>
+  </ul>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/mascot.png" alt="HomeBites" />
+          <span>HomeBites</span>
+        </div>
+        <p class="footer-tagline">AI-powered meal planning built for Kenyan families. Never wonder what to cook again.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>App</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#how">How it works</a>
+          <a href="index.html#recipes">Recipes</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="support.html">Support</a>
+          <a href="mailto:hello@homebites.app">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HomeBites. Made with ❤️ for Kenya.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" title="Instagram">📸</a>
+        <a href="#" class="social-link" title="Twitter / X">🐦</a>
+        <a href="#" class="social-link" title="TikTok">🎵</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

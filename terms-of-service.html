@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — HomeBites</title>
+  <meta name="description" content="HomeBites Terms of Service — the rules for using our app and services." />
+  <link rel="icon" href="assets/mascot.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary:       #FF8C61;
+      --primary-dark:  #E85D3F;
+      --primary-light: #FFD4C2;
+      --secondary:     #8FB996;
+      --secondary-dark:#6B9B73;
+      --accent:        #FFC857;
+      --bg:            #FFF8F3;
+      --surface:       #FFFFFF;
+      --surface-warm:  #F5EDE6;
+      --text:          #2D3748;
+      --text-muted:    #718096;
+      --radius:        16px;
+      --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(255,248,243,0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: var(--primary-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 10px 24px;
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px;
+      cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(255,140,97,0.35);
+      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,140,97,0.45); }
+    @media (max-width: 768px) { nav { padding: 14px 20px; } .nav-links { display: none; } }
+
+    .page-hero {
+      padding: 140px 48px 80px;
+      background: linear-gradient(135deg, #FFF8F3 0%, #FFD4C2 50%, #C5E1C8 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(255,200,150,0.3) 0%, transparent 70%);
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,140,97,0.12); border: 1px solid rgba(255,140,97,0.3);
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 20px;
+      font-size: 13px; font-weight: 600; color: var(--primary-dark);
+    }
+    .page-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 16px; }
+    .page-hero p { font-size: 17px; color: var(--text-muted); line-height: 1.7; }
+
+    .legal-content { max-width: 780px; margin: 0 auto; padding: 72px 48px 100px; }
+    .legal-content .last-updated {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 48px;
+      padding: 12px 20px; background: var(--surface-warm); border-radius: 10px;
+      border-left: 4px solid var(--primary);
+    }
+    .legal-content h2 {
+      font-size: 22px; font-weight: 700; color: var(--text);
+      margin-top: 48px; margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 2px solid var(--primary-light);
+    }
+    .legal-content h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 10px; }
+    .legal-content p { font-size: 16px; line-height: 1.8; color: #4A5568; margin-bottom: 16px; }
+    .legal-content ul, .legal-content ol { padding-left: 24px; margin-bottom: 16px; }
+    .legal-content li { font-size: 16px; line-height: 1.8; color: #4A5568; margin-bottom: 8px; }
+    .legal-content a { color: var(--primary-dark); text-decoration: underline; }
+    .legal-content a:hover { color: var(--primary); }
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(255,140,97,0.08), rgba(143,185,150,0.08));
+      border: 1px solid rgba(255,140,97,0.2);
+      border-radius: var(--radius); padding: 24px 28px; margin: 32px 0;
+    }
+    .highlight-box p { margin-bottom: 0; }
+    @media (max-width: 768px) { .page-hero { padding: 120px 24px 60px; } .legal-content { padding: 48px 24px 80px; } }
+
+    footer { background: var(--text); color: rgba(255,255,255,0.75); padding: 60px 48px 32px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
+    .footer-brand { max-width: 300px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+    .footer-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: #fff; }
+    .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); }
+    .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+    .footer-col h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--primary); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 14px; color: rgba(255,255,255,0.4); }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; transition: background 0.2s; }
+    .social-link:hover { background: rgba(255,140,97,0.25); }
+    @media (max-width: 768px) { footer { padding: 48px 24px 24px; } .footer-top { flex-direction: column; gap: 32px; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/mascot.png" alt="HomeBites" />
+    <span>HomeBites</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#how">How it works</a>
+    <a href="about.html">About</a>
+    <a href="support.html">Support</a>
+  </div>
+  <a href="index.html#download" class="nav-cta">Download App</a>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Legal</div>
+    <h1>Terms of Service</h1>
+    <p>By using HomeBites, you agree to these terms. Please read them — they're written in plain language so you actually can.</p>
+  </div>
+</section>
+
+<div class="legal-content">
+  <p class="last-updated">Last updated: May 21, 2025 &nbsp;·&nbsp; Effective: May 21, 2025</p>
+
+  <div class="highlight-box">
+    <p><strong>Key points:</strong> HomeBites is a free meal planning tool for personal use. Our AI (Mama AI) gives meal suggestions — not medical or nutritional advice. You own your data. We can suspend accounts that misuse the service. These terms are governed by the laws of Kenya.</p>
+  </div>
+
+  <h2>1. Acceptance of Terms</h2>
+  <p>These Terms of Service ("Terms") form a legally binding agreement between you and HomeBites ("we", "us", "our"). By downloading, installing, or using the HomeBites application or website, you confirm that you are at least 13 years old and agree to be bound by these Terms and our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+  <p>If you are using HomeBites on behalf of a family household, you represent that you have the authority to accept these Terms on behalf of all household members.</p>
+
+  <h2>2. The Service</h2>
+  <p>HomeBites provides:</p>
+  <ul>
+    <li>AI-powered Kenyan meal planning and recipe suggestions via "Mama AI" (powered by Google Gemini).</li>
+    <li>7-day meal calendar and personalised weekly plans.</li>
+    <li>Automatic grocery list generation.</li>
+    <li>Budget tracking for household food spend.</li>
+    <li>A recipe library of authentic Kenyan dishes.</li>
+    <li>Family member management for household customisation.</li>
+  </ul>
+  <p>The Service is provided free of charge and is intended for personal, non-commercial household use only.</p>
+
+  <h2>3. User Accounts</h2>
+
+  <h3>3.1 Creating an Account</h3>
+  <p>You may create an account using your email address or a linked Google/Apple account. You must provide accurate information and keep it up to date. You are responsible for maintaining the confidentiality of your login credentials.</p>
+
+  <h3>3.2 Guest Mode</h3>
+  <p>HomeBites offers a Guest Mode for limited use without registration. Guest data is stored locally on your device. We are not responsible for loss of guest data if the app is uninstalled or the device is reset.</p>
+
+  <h3>3.3 Account Security</h3>
+  <p>You are responsible for all activity under your account. If you suspect unauthorised access, contact us immediately at <a href="mailto:hello@homebites.app">hello@homebites.app</a>. We are not liable for losses arising from your failure to secure your account credentials.</p>
+
+  <h2>4. Acceptable Use</h2>
+  <p>You agree NOT to:</p>
+  <ul>
+    <li>Use HomeBites for any commercial purpose or to build a competing service.</li>
+    <li>Attempt to reverse-engineer, decompile, or disassemble the app.</li>
+    <li>Use automated scripts, bots, or scrapers to interact with the service.</li>
+    <li>Attempt to gain unauthorised access to our systems, Firebase databases, or AI proxy.</li>
+    <li>Submit content through Mama AI that is abusive, harmful, illegal, or offensive.</li>
+    <li>Impersonate another person or create accounts for fraudulent purposes.</li>
+    <li>Circumvent usage limits or attempt to misuse the AI features.</li>
+  </ul>
+  <p>We reserve the right to suspend or terminate accounts that violate these rules, at our sole discretion, with or without notice.</p>
+
+  <h2>5. AI Features and Limitations</h2>
+  <p>Mama AI is an AI assistant powered by Google Gemini. Important limitations apply:</p>
+  <ul>
+    <li><strong>Not medical advice:</strong> Meal suggestions from Mama AI are for general household planning purposes only. They do not constitute medical, nutritional, or dietary advice. If you have specific health conditions, allergies, or dietary requirements, consult a qualified healthcare professional or nutritionist.</li>
+    <li><strong>Accuracy:</strong> AI-generated meal plans and recipes may contain errors, inaccuracies, or suggestions that don't suit your preferences. Always use your own judgment.</li>
+    <li><strong>Allergen responsibility:</strong> While you can tell Mama AI about dietary restrictions, you are solely responsible for verifying that ingredients in any suggested recipe are safe for all household members.</li>
+    <li><strong>Service availability:</strong> AI features depend on Google Gemini and our Cloud Function infrastructure. We do not guarantee uninterrupted availability of AI features.</li>
+  </ul>
+
+  <h2>6. Intellectual Property</h2>
+
+  <h3>6.1 Our Content</h3>
+  <p>The HomeBites app, website, logo, mascot ("Mama AI" character), recipe library, and all associated content are the intellectual property of HomeBites and are protected by copyright and other applicable laws. You may not reproduce, distribute, or create derivative works from our content without our written permission.</p>
+
+  <h3>6.2 Your Content</h3>
+  <p>You own all data you create in HomeBites (your meal plans, grocery lists, chat history, and custom preferences). By using our service, you grant us a limited, non-exclusive licence to store and process this data solely to provide the HomeBites service to you. We do not use your personal meal data for training AI models.</p>
+
+  <h2>7. Third-Party Services</h2>
+  <p>HomeBites integrates with the following third-party services:</p>
+  <ul>
+    <li><strong>Google Firebase:</strong> For authentication, database, and analytics.</li>
+    <li><strong>Google Gemini:</strong> For AI-powered meal planning and chat features.</li>
+  </ul>
+  <p>Your use of these services is subject to their respective terms and privacy policies. We are not responsible for the conduct of third-party service providers.</p>
+
+  <h2>8. Availability and Changes</h2>
+  <p>We aim to keep HomeBites available 24/7 but we do not guarantee uninterrupted service. We may:</p>
+  <ul>
+    <li>Update, modify, or remove features from the app at any time.</li>
+    <li>Perform maintenance that temporarily makes the service unavailable.</li>
+    <li>Change or discontinue the service with reasonable notice.</li>
+  </ul>
+  <p>We will provide in-app notice of significant changes that affect your use of the service.</p>
+
+  <h2>9. Disclaimer of Warranties</h2>
+  <p>HomeBites is provided "as is" and "as available" without any warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not warrant that the app will be error-free, secure, or available at all times.</p>
+
+  <h2>10. Limitation of Liability</h2>
+  <p>To the maximum extent permitted by applicable law, HomeBites and its developers shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of, or inability to use, the service — including but not limited to loss of data, financial loss from budget decisions made based on app suggestions, or health-related consequences from following AI meal suggestions.</p>
+  <p>Our total liability to you for any claim arising under these Terms shall not exceed KES 1,000 (one thousand Kenyan Shillings).</p>
+
+  <h2>11. Indemnification</h2>
+  <p>You agree to indemnify and hold harmless HomeBites, its developers, and affiliates from any claims, damages, or expenses (including reasonable legal fees) arising from your violation of these Terms or misuse of the service.</p>
+
+  <h2>12. Governing Law</h2>
+  <p>These Terms are governed by and construed in accordance with the laws of the Republic of Kenya. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts of Kenya.</p>
+
+  <h2>13. Changes to These Terms</h2>
+  <p>We may update these Terms from time to time. We will notify you of significant changes via an in-app notification and by updating the "Last updated" date above. Your continued use of HomeBites after changes are posted constitutes your acceptance of the updated Terms.</p>
+
+  <h2>14. Termination</h2>
+  <p>You may stop using HomeBites and delete your account at any time via Profile &gt; Settings &gt; Delete Account. We may suspend or terminate your access for violations of these Terms. Upon termination, your right to use the service ceases immediately and your data will be deleted per our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+
+  <h2>15. Contact</h2>
+  <p>Questions about these Terms? We're here to help:</p>
+  <ul>
+    <li><strong>Email:</strong> <a href="mailto:hello@homebites.app">hello@homebites.app</a></li>
+    <li><strong>Support:</strong> <a href="support.html">homebites.app/support</a></li>
+  </ul>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/mascot.png" alt="HomeBites" />
+          <span>HomeBites</span>
+        </div>
+        <p class="footer-tagline">AI-powered meal planning built for Kenyan families. Never wonder what to cook again.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>App</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#how">How it works</a>
+          <a href="index.html#recipes">Recipes</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="support.html">Support</a>
+          <a href="mailto:hello@homebites.app">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HomeBites. Made with ❤️ for Kenya.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" title="Instagram">📸</a>
+        <a href="#" class="social-link" title="Twitter / X">🐦</a>
+        <a href="#" class="social-link" title="TikTok">🎵</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
