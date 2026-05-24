@@ -38,7 +38,7 @@
       --display: clamp(50px,7vw,92px);
       --h1:      clamp(34px,5vw,62px);
       --h2:      clamp(24px,3.5vw,46px);
-      --gutter:  clamp(24px,5vw,72px);
+      --gutter:  clamp(48px,7vw,120px);
       --section: clamp(80px,10vw,140px);
       --wrap:    1200px;
       /* ── Motion */
@@ -106,15 +106,16 @@
     .grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 
     .hero-inner{position:relative;z-index:2;max-width:var(--wrap);width:100%;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+    .hero-inner>div:first-child{padding-left:32px}
 
     .hero-cap{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-d);display:flex;align-items:center;gap:10px;margin-bottom:28px;animation:fuUp .7s var(--enter) 1.5s both}
     .hero-cap::before{content:'';width:24px;height:1px;background:var(--orange)}
     .hcdot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-    .hero-h1{font-family:var(--serif);font-size:var(--display);font-weight:900;font-style:italic;line-height:.96;letter-spacing:-.025em;color:var(--text);margin-bottom:32px}
+    .hero-h1{font-family:var(--serif);font-size:var(--display);font-weight:900;font-style:italic;line-height:1.05;letter-spacing:-.025em;color:var(--text);margin-bottom:32px;padding-left:0.12em}
     .hero-h1 em{font-style:normal;color:var(--orange)}
-    .hl{display:block;overflow:hidden}
+    .hl{display:block;overflow:hidden;padding:.28em 0 .18em .22em;margin:-.28em 0 -.18em -.22em}
     .hl-in{display:block;transform:translateY(110%);animation:lineUp 1s var(--enter) both}
     .hl:nth-child(1) .hl-in{animation-delay:1.6s}
     .hl:nth-child(2) .hl-in{animation-delay:1.75s}
