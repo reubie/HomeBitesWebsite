@@ -8,312 +8,241 @@
   <link rel="icon" href="assets/mascot.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary:       #FF8C61;
-      --primary-dark:  #E85D3F;
-      --primary-light: #FFD4C2;
-      --secondary:     #8FB996;
-      --secondary-dark:#6B9B73;
-      --accent:        #FFC857;
-      --bg:            #FFF8F3;
-      --surface:       #FFFFFF;
-      --surface-warm:  #F5EDE6;
-      --text:          #2D3748;
-      --text-muted:    #718096;
-      --radius:        16px;
-      --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
-      --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#FFF8F3;--bg2:#F5EDE6;--bg3:#FAEEE5;--bg4:#FFE4D6;
+      --surface:#FFFFFF;
+      --orange:#FF8C61;--orange-d:#E85D3F;--orange-l:#FFD4C2;
+      --og:rgba(255,140,97,0.28);
+      --green:#8FB996;--green-d:#6B9B73;--gold:#FFC857;
+      --dark:#1E1209;--dark2:#2A1A0E;
+      --text:#2D3748;--muted:rgba(45,55,72,0.52);--ondk:#FFF8F3;
+      --serif:'Playfair Display',Georgia,serif;
+      --mono:'Space Mono','Courier New',monospace;
+      --sans:'Sora',sans-serif;
+      --h1:clamp(34px,5vw,62px);--h2:clamp(24px,3.5vw,46px);
+      --gutter:clamp(24px,5vw,72px);--section:clamp(80px,10vw,140px);--wrap:1200px;
+      --ease:cubic-bezier(.25,.46,.45,.94);--spring:cubic-bezier(.34,1.56,.64,1);--enter:cubic-bezier(.16,1,.3,1);
     }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-    h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:var(--mono);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+    @media(pointer:coarse){body{cursor:auto}}
+    img{max-width:100%}
 
-    .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.9s var(--ease-cinematic), transform 0.9s var(--ease-cinematic); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-left  { opacity: 0; transform: translateX(-60px); transition: opacity 0.9s var(--ease-cinematic), transform 0.9s var(--ease-cinematic); }
-    .reveal-right { opacity: 0; transform: translateX(60px);  transition: opacity 0.9s var(--ease-cinematic), transform 0.9s var(--ease-cinematic); }
-    .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: translateX(0); }
-    .reveal-scale { opacity: 0; transform: scale(0.88); transition: opacity 0.9s var(--ease-cinematic), transform 0.9s var(--ease-spring); }
-    .reveal-scale.visible { opacity: 1; transform: scale(1); }
-    .delay-1 { transition-delay: 0.12s !important; }
-    .delay-2 { transition-delay: 0.24s !important; }
-    .delay-3 { transition-delay: 0.38s !important; }
+    #cd,#cr{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+    #cd{width:6px;height:6px;background:var(--orange)}
+    #cr{width:30px;height:30px;border:1.5px solid rgba(255,140,97,.5);transition:width .3s,height .3s,background .3s,border-color .3s}
+    body.hov #cd{transform:translate(-50%,-50%) scale(0)}
+    body.hov #cr{width:48px;height:48px;border-color:var(--orange);background:rgba(255,140,97,.08)}
+    @media(pointer:coarse){#cd,#cr{display:none}}
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 48px;
-      background: rgba(255,248,243,0.9);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
-    .nav-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: var(--primary-dark); }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 15px; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--primary-dark); }
-    .nav-cta {
-      background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 10px 24px;
-      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px;
-      cursor: pointer; text-decoration: none; box-shadow: 0 4px 16px rgba(255,140,97,0.35);
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-    }
-    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,140,97,0.45); }
-    @media (max-width: 768px) { nav { padding: 14px 20px; } .nav-links { display: none; } }
+    #prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:500}
+    #pbar{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--gold),var(--green));transition:width .1s linear}
 
-    /* HERO — cinematic with mascot */
-    .about-hero {
-      min-height: 85vh; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      background: linear-gradient(160deg, #FFF8F3 0%, #FFD4C2 45%, #B8D9BE 100%);
-      padding: 120px 48px 80px;
-    }
-    .about-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 70% 30%, rgba(255,220,160,0.35) 0%, transparent 60%);
-    }
-    .blob { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; animation: blobFloat 10s ease-in-out infinite; }
-    .blob-a { width: 500px; height: 500px; background: rgba(255,140,97,0.18); top: -80px; right: -80px; animation-duration: 9s; }
-    .blob-b { width: 350px; height: 350px; background: rgba(143,185,150,0.2); bottom: 0; left: -60px; animation-duration: 13s; animation-delay: -4s; }
-    @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-20px) scale(1.04)} 66%{transform:translate(-15px,15px) scale(0.97)} }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px var(--gutter);transition:background .4s,padding .3s,box-shadow .4s}
+    nav.stuck{background:rgba(255,248,243,.92);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);padding:14px var(--gutter);box-shadow:0 1px 0 rgba(255,140,97,.15),0 4px 32px rgba(45,55,72,.08)}
+    .nl{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nl img{width:34px;height:34px;object-fit:contain}
+    .nl span{font-family:var(--sans);font-weight:800;font-size:19px;color:var(--orange-d)}
+    .nlinks{display:flex;align-items:center;gap:32px}
+    .nlinks a{font-family:var(--mono);font-size:11px;text-decoration:none;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
+    .nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+    .nlinks a:hover{color:var(--text)}
+    .nlinks a:hover::after{transform:scaleX(1)}
+    .ncta{font-family:var(--sans);font-size:13px;font-weight:700;background:var(--orange);color:#fff;border:none;border-radius:999px;padding:10px 24px;text-decoration:none;cursor:none;box-shadow:0 4px 20px var(--og);transition:transform .25s var(--spring),box-shadow .25s}
+    .ncta:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 10px 32px rgba(255,140,97,.45)}
+    @media(max-width:768px){nav{padding:16px 24px}nav.stuck{padding:12px 24px}.nlinks{display:none}}
 
-    .about-hero-inner { position: relative; z-index: 2; max-width: 1100px; width: 100%; display: flex; align-items: center; gap: 80px; }
-    .about-hero-text { flex: 1; }
-    .about-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,140,97,0.12); border: 1px solid rgba(255,140,97,0.3);
-      border-radius: 50px; padding: 6px 16px; margin-bottom: 24px;
-      font-size: 13px; font-weight: 600; color: var(--primary-dark);
-      animation: fadeSlideDown 0.8s var(--ease-cinematic) both;
-    }
-    @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
-    .about-hero h1 {
-      font-size: clamp(36px, 5.5vw, 60px); font-weight: 800; color: var(--text); line-height: 1.1;
-      margin-bottom: 24px;
-      animation: fadeSlideUp 0.9s 0.15s var(--ease-cinematic) both;
-    }
-    @keyframes fadeSlideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
-    .about-hero h1 span { color: var(--primary-dark); }
-    .about-hero-lead {
-      font-size: 18px; line-height: 1.8; color: #4A5568; max-width: 520px;
-      animation: fadeSlideUp 0.9s 0.3s var(--ease-cinematic) both;
-    }
-    .about-mascot-wrap {
-      flex-shrink: 0; width: 300px; position: relative;
-      animation: fadeSlideUp 1s 0.2s var(--ease-cinematic) both;
-    }
-    .about-mascot-wrap::before {
-      content: ''; position: absolute; inset: -20px;
-      background: radial-gradient(circle, rgba(255,140,97,0.18) 0%, transparent 70%);
-      border-radius: 50%; animation: ringPulse 3s ease-in-out infinite;
-    }
-    @keyframes ringPulse { 0%,100%{transform:scale(1);opacity:0.6} 50%{transform:scale(1.12);opacity:0.3} }
-    .about-mascot-wrap img { width: 100%; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(255,140,97,0.25)); animation: mascotFloat 5s ease-in-out infinite; }
-    @keyframes mascotFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+    .gbg{position:absolute;inset:0;z-index:0;background:linear-gradient(-45deg,#FFF8F3,#FFE4D6,#FFF0E8,#FFD4C2,#FFEADD,#FFF8F3);background-size:400% 400%;animation:gShift 18s ease infinite}
+    @keyframes gShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .gorb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+    .go-o{width:600px;height:600px;background:rgba(255,140,97,.2);top:-120px;right:-80px;animation:gorbF 14s ease-in-out infinite}
+    .go-g{width:400px;height:400px;background:rgba(143,185,150,.14);bottom:-80px;left:-60px;animation:gorbF 10s ease-in-out 4s infinite reverse}
+    @keyframes gorbF{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(20px,-24px) scale(1.05)}66%{transform:translate(-16px,18px) scale(.97)}}
+    .grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 
-    /* STORY */
-    .story-section { padding: 96px 48px; max-width: 1100px; margin: 0 auto; }
-    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .story-text h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
-    .story-text h2 span { color: var(--primary-dark); }
-    .story-text p { font-size: 16px; line-height: 1.9; color: #4A5568; margin-bottom: 18px; }
-    .story-visual {
-      background: linear-gradient(135deg, var(--primary-light), rgba(143,185,150,0.3));
-      border-radius: 28px; padding: 48px 40px; text-align: center;
-      box-shadow: 0 24px 64px rgba(255,140,97,0.15);
-      position: relative; overflow: hidden;
-    }
-    .story-visual::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle at 70% 20%, rgba(255,200,87,0.2) 0%, transparent 60%);
-    }
-    .story-visual-inner { position: relative; z-index: 1; }
-    .story-quote { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; color: var(--primary-dark); line-height: 1.4; margin-bottom: 20px; }
-    .story-quote::before { content: '"'; font-size: 60px; color: rgba(232,93,63,0.2); display: block; line-height: 0.8; margin-bottom: 12px; }
-    .story-attrib { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+    .stag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-d);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .stag::before{content:'';width:20px;height:1px;background:var(--orange)}
+    .sh{font-family:var(--serif);font-size:var(--h2);font-weight:900;line-height:1.1;letter-spacing:-.022em;color:var(--text)}
+    .sh.ondk{color:var(--ondk)}
+    .sb{font-family:var(--mono);font-size:14px;line-height:1.85;color:var(--muted)}
+    .sb.ondk{color:rgba(255,248,243,.55)}
+    .stag.ondk{color:var(--orange-l)}
+    .stag.ondk::before{background:var(--orange-l)}
 
-    /* VALUES */
-    .values-section {
-      background: var(--text); color: #fff;
-      padding: 96px 48px; position: relative; overflow: hidden;
-    }
-    .values-section::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,140,97,0.12) 0%, transparent 60%);
-    }
-    .values-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-    .values-inner .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; text-align: center; }
-    .values-inner h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; text-align: center; margin-bottom: 64px; }
-    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-    .value-card {
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px; padding: 32px 28px;
-      transition: background 0.3s, transform 0.3s var(--ease-spring);
-    }
-    .value-card:hover { background: rgba(255,140,97,0.1); transform: translateY(-4px); }
-    .value-icon { font-size: 36px; margin-bottom: 16px; }
-    .value-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .value-card p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.6); }
+    [data-r]{opacity:0;transform:translateY(44px);transition:opacity .9s var(--enter),transform .9s var(--enter)}
+    [data-r=l]{transform:translateX(-50px)}
+    [data-r=r]{transform:translateX(50px)}
+    [data-r=s]{transform:scale(.9);transition:opacity .9s var(--enter),transform .9s var(--spring)}
+    [data-r].in{opacity:1;transform:none}
+    [data-d="1"]{transition-delay:.1s!important}[data-d="2"]{transition-delay:.22s!important}
+    [data-d="3"]{transition-delay:.36s!important}[data-d="4"]{transition-delay:.52s!important}
 
-    /* TECH STACK */
-    .tech-section { padding: 96px 48px; max-width: 900px; margin: 0 auto; text-align: center; }
-    .tech-section h2 { font-size: clamp(26px, 3.5vw, 38px); font-weight: 800; margin-bottom: 12px; }
-    .tech-section .sub { font-size: 16px; color: var(--text-muted); margin-bottom: 48px; }
-    .tech-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
-    .tech-pill {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--surface); border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 50px; padding: 10px 20px;
-      font-size: 14px; font-weight: 600; color: var(--text);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-    }
-    .tech-pill:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-    .tech-pill .tech-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .ph{min-height:90vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:130px var(--gutter) 90px}
+    .ph-inner{position:relative;z-index:2;max-width:var(--wrap);width:100%;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+    .ph-cap{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-d);display:flex;align-items:center;gap:10px;margin-bottom:24px}
+    .ph-cap::before{content:'';width:24px;height:1px;background:var(--orange)}
+    .ph-h1{font-family:var(--serif);font-size:var(--h1);font-weight:900;font-style:italic;line-height:.98;letter-spacing:-.025em;color:var(--text);margin-bottom:28px}
+    .ph-h1 em{font-style:normal;color:var(--orange)}
+    .ph-body{font-family:var(--mono);font-size:14px;line-height:1.9;color:var(--muted);max-width:420px}
 
-    /* CTA */
-    .about-cta {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      padding: 80px 48px; text-align: center; position: relative; overflow: hidden;
-    }
-    .about-cta::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.12) 0%, transparent 50%);
-    }
-    .about-cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
-    .about-cta h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: #fff; margin-bottom: 16px; }
-    .about-cta p { font-size: 17px; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 36px; }
-    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn-white {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #fff; color: var(--primary-dark);
-      border-radius: 50px; padding: 14px 32px; text-decoration: none;
-      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-    }
-    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
-    .btn-outline-white {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: #fff;
-      border: 2px solid rgba(255,255,255,0.6);
-      border-radius: 50px; padding: 14px 32px; text-decoration: none;
-      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .btn-outline-white:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+    .mascot-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%;max-width:420px;aspect-ratio:1;margin:0 auto}
+    .m-glow{position:absolute;inset:12%;background:radial-gradient(circle,rgba(255,140,97,.28) 0%,transparent 70%);border-radius:50%;animation:gPulse 4s ease-in-out infinite}
+    .m-ring{position:absolute;inset:6%;border:1.5px solid rgba(255,140,97,.22);border-radius:50%;animation:rPulse 3s ease-in-out infinite}
+    .m-ring2{position:absolute;inset:-4%;border:1px solid rgba(255,140,97,.1);border-radius:50%;animation:rPulse 3s ease-in-out 1s infinite}
+    @keyframes gPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.18);opacity:1}}
+    @keyframes rPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.05);opacity:1}}
+    .m-img{position:relative;z-index:2;width:78%;object-fit:contain;filter:drop-shadow(0 24px 48px rgba(255,140,97,.3));animation:mFloat 5s ease-in-out infinite}
+    @keyframes mFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-18px) rotate(1deg)}}
 
-    footer { background: var(--text); color: rgba(255,255,255,0.75); padding: 60px 48px 32px; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-top { display: flex; justify-content: space-between; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
-    .footer-brand { max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .footer-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
-    .footer-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: #fff; }
-    .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); }
-    .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
-    .footer-col h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--primary); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { font-size: 14px; color: rgba(255,255,255,0.4); }
-    .footer-socials { display: flex; gap: 12px; }
-    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; transition: background 0.2s; }
-    .social-link:hover { background: rgba(255,140,97,0.25); }
+    @media(max-width:900px){.ph{padding:110px 24px 80px}.ph-inner{grid-template-columns:1fr;text-align:center;gap:40px}.ph-cap{justify-content:center}.ph-body{margin:0 auto}.mascot-wrap{max-width:260px}}
 
-    @media (max-width: 900px) {
-      .about-hero { padding: 120px 24px 60px; }
-      .about-hero-inner { flex-direction: column; gap: 40px; text-align: center; }
-      .about-mascot-wrap { width: 220px; }
-      .about-hero-lead { margin: 0 auto; }
-      .story-section { padding: 72px 24px; }
-      .story-grid { grid-template-columns: 1fr; gap: 48px; }
-      .values-section { padding: 72px 24px; }
-      .tech-section { padding: 72px 24px; }
-      .about-cta { padding: 64px 24px; }
-      footer { padding: 48px 24px 24px; }
-      .footer-top { flex-direction: column; gap: 32px; }
-    }
+    .story-sec{padding:var(--section) 0;background:var(--bg)}
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+    .story-body{font-family:var(--mono);font-size:14px;line-height:1.9;color:var(--muted);margin-bottom:16px}
+    .story-h{margin-bottom:28px}
+    .story-q-wrap{background:linear-gradient(135deg,var(--orange-l),rgba(143,185,150,.25));border-radius:28px;padding:52px 44px;text-align:center;box-shadow:0 24px 64px rgba(255,140,97,.15);position:relative;overflow:hidden}
+    .story-q-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(255,200,87,.2) 0%,transparent 60%)}
+    .story-q-inner{position:relative;z-index:1}
+    .story-q{font-family:var(--serif);font-size:clamp(18px,2.5vw,26px);font-weight:800;font-style:italic;color:var(--orange-d);line-height:1.4;margin-bottom:20px}
+    .story-q::before{content:'"';font-size:80px;color:rgba(232,93,63,.18);display:block;line-height:.65;margin-bottom:18px;font-style:normal}
+    .story-att{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    @media(max-width:900px){.story-grid{grid-template-columns:1fr;gap:48px}}
+
+    .val-sec{background:var(--dark);padding:var(--section) 0;position:relative;overflow:hidden}
+    .val-sec .gorb.go-o{background:rgba(255,140,97,.08);top:-100px;right:-60px}
+    .val-inner{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+    .val-hd{text-align:center;margin-bottom:72px}
+    .val-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+    .val-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:36px 30px;transition:background .3s,transform .3s var(--spring)}
+    .val-card:hover{background:rgba(255,140,97,.08);transform:translateY(-4px)}
+    .val-icon{font-size:36px;margin-bottom:16px;display:block}
+    .val-card h3{font-family:var(--serif);font-size:22px;font-weight:800;color:var(--ondk);margin-bottom:12px}
+    .val-card p{font-family:var(--mono);font-size:13px;line-height:1.8;color:rgba(255,248,243,.5)}
+
+    .tech-sec{padding:var(--section) 0;background:var(--bg2);text-align:center}
+    .tech-inner{max-width:900px;margin:0 auto;padding:0 var(--gutter)}
+    .tech-stag{justify-content:center}
+    .tech-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:48px}
+    .tpill{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid rgba(45,55,72,.08);border-radius:999px;padding:11px 22px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);box-shadow:0 2px 12px rgba(0,0,0,.05);transition:transform .2s var(--spring),box-shadow .2s}
+    .tpill:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.1)}
+    .tdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .tech-note{font-family:var(--mono);font-size:13px;line-height:1.85;color:var(--muted);margin-top:36px;max-width:620px;margin-left:auto;margin-right:auto}
+
+    .ab-cta{background:var(--orange);padding:var(--section) var(--gutter);text-align:center;position:relative;overflow:hidden}
+    .ab-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.15) 0%,transparent 55%)}
+    .ab-cta-inner{position:relative;z-index:1;max-width:620px;margin:0 auto}
+    .ab-cta .sh{color:#fff;font-style:italic;margin-bottom:16px}
+    .ab-cta .sb{color:rgba(255,255,255,.85);margin-bottom:40px}
+    .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .btn-w{font-family:var(--sans);font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--orange-d);border-radius:999px;padding:14px 32px;text-decoration:none;cursor:none;box-shadow:0 8px 32px rgba(0,0,0,.15);transition:transform .25s var(--spring),box-shadow .25s}
+    .btn-w:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(0,0,0,.2)}
+    .btn-ow{font-family:var(--sans);font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:13px 30px;text-decoration:none;cursor:none;transition:background .2s,border-color .2s}
+    .btn-ow:hover{background:rgba(255,255,255,.12);border-color:#fff}
+
+    footer{background:var(--dark);color:rgba(255,248,243,.6);padding:72px var(--gutter) 32px;border-top:3px solid var(--orange)}
+    .ft-inner{max-width:var(--wrap);margin:0 auto}
+    .ft-top{display:flex;justify-content:space-between;gap:48px;margin-bottom:56px;flex-wrap:wrap}
+    .ft-brand{max-width:300px}
+    .ft-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .ft-logo img{width:34px;height:34px;object-fit:contain}
+    .ft-logo span{font-family:var(--sans);font-weight:800;font-size:19px;color:var(--ondk)}
+    .ft-tag{font-family:var(--mono);font-size:13px;line-height:1.75;color:rgba(255,248,243,.42)}
+    .ft-links{display:flex;gap:48px;flex-wrap:wrap}
+    .ft-col h4{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-l);margin-bottom:18px}
+    .ft-col a{display:block;font-family:var(--mono);font-size:13px;color:rgba(255,248,243,.42);text-decoration:none;margin-bottom:10px;transition:color .2s}
+    .ft-col a:hover{color:var(--orange)}
+    .ft-bot{border-top:1px solid rgba(255,248,243,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .ft-bot p{font-family:var(--mono);font-size:12px;color:rgba(255,248,243,.28)}
+    .ft-soc{display:flex;gap:10px}
+    .ft-s{width:34px;height:34px;border-radius:50%;background:rgba(255,248,243,.06);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:15px;transition:background .2s}
+    .ft-s:hover{background:rgba(255,140,97,.2)}
+    @media(max-width:768px){footer{padding:48px 24px 24px}.ft-top{flex-direction:column;gap:32px}}
   </style>
 </head>
 <body>
+<div id="cd"></div><div id="cr"></div>
+<div id="prog"><div id="pbar"></div></div>
 
-<nav>
-  <a href="index.html" class="nav-logo">
+<nav id="nav">
+  <a href="index.html" class="nl">
     <img src="assets/mascot.png" alt="HomeBites" />
     <span>HomeBites</span>
   </a>
-  <div class="nav-links">
+  <div class="nlinks">
     <a href="index.html#features">Features</a>
     <a href="index.html#how">How it works</a>
     <a href="about.html">About</a>
     <a href="support.html">Support</a>
   </div>
-  <a href="index.html#download" class="nav-cta">Download App</a>
+  <a href="index.html#download" class="ncta">Download App</a>
 </nav>
 
-<!-- HERO -->
-<section class="about-hero">
-  <div class="blob blob-a"></div>
-  <div class="blob blob-b"></div>
-  <div class="about-hero-inner">
-    <div class="about-hero-text">
-      <div class="about-eyebrow">Our Story</div>
-      <h1>Built for <span>Kenyan kitchens.</span><br/>Powered by AI.</h1>
-      <p class="about-hero-lead">HomeBites started with a simple frustration: the exhausting daily question of "what should we cook tonight?" We built an app that answers it — intelligently, affordably, and in the context of real Kenyan households.</p>
+<section class="ph">
+  <div class="gbg"></div>
+  <div class="gorb go-o"></div>
+  <div class="gorb go-g"></div>
+  <div class="grain"></div>
+  <div class="ph-inner">
+    <div>
+      <div class="ph-cap">Our Story</div>
+      <h1 class="ph-h1">Built for <em>Kenyan</em><br/>kitchens.<br/>Powered by AI.</h1>
+      <p class="ph-body">HomeBites started with a simple frustration: the exhausting daily question of "what should we cook tonight?" We built an app that answers it — intelligently, affordably, and in the context of real Kenyan households.</p>
     </div>
-    <div class="about-mascot-wrap">
-      <img src="assets/mascot.png" alt="Mama AI — HomeBites mascot" />
+    <div class="mascot-wrap" data-r="s">
+      <div class="m-glow"></div>
+      <div class="m-ring"></div>
+      <div class="m-ring2"></div>
+      <img src="assets/mascot.png" alt="Mama AI — HomeBites mascot" class="m-img" />
     </div>
   </div>
 </section>
 
-<!-- STORY -->
-<section class="story-section">
+<section class="story-sec">
   <div class="story-grid">
-    <div class="story-text reveal-left">
-      <h2>The problem we set out to <span>solve</span></h2>
-      <p>Every evening, millions of Kenyan households face the same conversation: "What are we eating?" It sounds like a small problem — but it's a daily source of stress that drains mental energy, wastes money through poor planning, and often leads to the same five dishes on repeat.</p>
-      <p>Existing meal planning apps were built for Western kitchens — filled with ingredients you can't find at the market in Nairobi, Kisumu, or Mombasa, with no awareness of Kenyan cooking traditions, budgets, or the real rhythm of how Kenyan families eat.</p>
-      <p>HomeBites was built to fill that gap. A meal planner that knows ugali, pilau, and nyama choma as well as it knows your budget. One that thinks in Kenyan Shillings, not dollars.</p>
+    <div data-r="l">
+      <div class="stag">The problem we solve</div>
+      <h2 class="sh story-h">A meal planner that <em style="color:var(--orange)">actually</em> knows Kenya</h2>
+      <p class="story-body">Every evening, millions of Kenyan households face the same conversation: "What are we eating?" It sounds like a small problem — but it's a daily source of stress that drains mental energy, wastes money through poor planning, and often leads to the same five dishes on repeat.</p>
+      <p class="story-body">Existing meal planning apps were built for Western kitchens — filled with ingredients you can't find at the market in Nairobi, Kisumu, or Mombasa, with no awareness of Kenyan cooking traditions, budgets, or the real rhythm of how Kenyan families eat.</p>
+      <p class="story-body">HomeBites fills that gap. A meal planner that knows ugali, pilau, and nyama choma as well as it knows your budget. One that thinks in Kenyan Shillings, not dollars.</p>
     </div>
-    <div class="story-visual reveal-right">
-      <div class="story-visual-inner">
-        <div class="story-quote">Dinner should never be a source of stress. It should be something a family looks forward to.</div>
-        <div class="story-attrib">— The HomeBites team</div>
+    <div class="story-q-wrap" data-r="r">
+      <div class="story-q-inner">
+        <div class="story-q">Dinner should never be a source of stress. It should be something a family looks forward to.</div>
+        <div class="story-att">— The HomeBites team</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- VALUES -->
-<section class="values-section">
-  <div class="values-inner">
-    <p class="section-eyebrow reveal">What we believe</p>
-    <h2 class="reveal delay-1">Built on these principles</h2>
-    <div class="values-grid">
-      <div class="value-card reveal">
-        <div class="value-icon">🇰🇪</div>
+<section class="val-sec">
+  <div class="gorb go-o"></div>
+  <div class="val-inner">
+    <div class="val-hd">
+      <div class="stag ondk" style="justify-content:center" data-r>What we believe</div>
+      <h2 class="sh ondk" data-r data-d="1">Built on these principles</h2>
+    </div>
+    <div class="val-grid">
+      <div class="val-card" data-r data-d="1">
+        <span class="val-icon">🇰🇪</span>
         <h3>Kenyan First</h3>
         <p>Every recipe, every suggestion, every budget assumption is rooted in the reality of Kenyan households — not adapted from somewhere else.</p>
       </div>
-      <div class="value-card reveal delay-1">
-        <div class="value-icon">🔒</div>
+      <div class="val-card" data-r data-d="2">
+        <span class="val-icon">🔒</span>
         <h3>Privacy by Design</h3>
         <p>Your meal history and family data are yours. We never sell data. AI keys never touch your device. Security is built in from day one.</p>
       </div>
-      <div class="value-card reveal delay-2">
-        <div class="value-icon">💰</div>
+      <div class="val-card" data-r data-d="3">
+        <span class="val-icon">💰</span>
         <h3>Accessible to All</h3>
         <p>HomeBites is free. Real Kenyan families shouldn't need a subscription to plan affordable, nutritious meals for their household.</p>
       </div>
-      <div class="value-card reveal delay-3">
-        <div class="value-icon">🤖</div>
+      <div class="val-card" data-r data-d="4">
+        <span class="val-icon">🤖</span>
         <h3>AI That Listens</h3>
         <p>Mama AI learns your family's preferences over time. The more you use it, the better the suggestions — without ever being intrusive.</p>
       </div>
@@ -321,95 +250,100 @@
   </div>
 </section>
 
-<!-- TECH STACK -->
-<section class="tech-section">
-  <p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--primary-dark);margin-bottom:12px" class="reveal">Under the hood</p>
-  <h2 class="reveal delay-1">Built with modern, secure technology</h2>
-  <p class="sub reveal delay-2">HomeBites is a native iOS and Android app built on a secure, scalable stack.</p>
-  <div class="tech-grid">
-    <div class="tech-pill reveal"><span class="tech-dot" style="background:#61DAFB"></span> React Native</div>
-    <div class="tech-pill reveal delay-1"><span class="tech-dot" style="background:#3178C6"></span> TypeScript</div>
-    <div class="tech-pill reveal delay-2"><span class="tech-dot" style="background:#FF6D00"></span> Firebase</div>
-    <div class="tech-pill reveal delay-3"><span class="tech-dot" style="background:#8AB4F8"></span> Google Gemini AI</div>
-    <div class="tech-pill reveal"><span class="tech-dot" style="background:#764ABC"></span> Redux Toolkit</div>
-    <div class="tech-pill reveal delay-1"><span class="tech-dot" style="background:#34A853"></span> Cloud Functions</div>
-    <div class="tech-pill reveal delay-2"><span class="tech-dot" style="background:#F4B400"></span> Secret Manager</div>
-    <div class="tech-pill reveal delay-3"><span class="tech-dot" style="background:#FF8C61"></span> Firestore</div>
+<section class="tech-sec">
+  <div class="tech-inner">
+    <div class="stag tech-stag" data-r>Under the hood</div>
+    <h2 class="sh" data-r data-d="1">Built with modern, secure technology</h2>
+    <p class="sb" style="max-width:520px;margin:16px auto 0" data-r data-d="2">HomeBites is a native iOS and Android app built on a secure, scalable stack.</p>
+    <div class="tech-pills">
+      <div class="tpill" data-r><span class="tdot" style="background:#61DAFB"></span>React Native</div>
+      <div class="tpill" data-r data-d="1"><span class="tdot" style="background:#3178C6"></span>TypeScript</div>
+      <div class="tpill" data-r data-d="2"><span class="tdot" style="background:#FF6D00"></span>Firebase</div>
+      <div class="tpill" data-r data-d="3"><span class="tdot" style="background:#8AB4F8"></span>Google Gemini AI</div>
+      <div class="tpill" data-r><span class="tdot" style="background:#764ABC"></span>Redux Toolkit</div>
+      <div class="tpill" data-r data-d="1"><span class="tdot" style="background:#34A853"></span>Cloud Functions</div>
+      <div class="tpill" data-r data-d="2"><span class="tdot" style="background:#F4B400"></span>Secret Manager</div>
+      <div class="tpill" data-r data-d="3"><span class="tdot" style="background:#FF8C61"></span>Firestore</div>
+    </div>
+    <p class="tech-note" data-r>API keys are stored in Google Secret Manager — never in the app bundle. Every AI request is authenticated with Firebase tokens. Firestore rules ensure only you can access your data.</p>
   </div>
-  <p style="margin-top:32px;font-size:14px;color:var(--text-muted);line-height:1.8" class="reveal">
-    API keys are stored in Google Secret Manager — never in the app bundle. Every AI request is authenticated with Firebase tokens. Firestore rules ensure only you can access your data.
-  </p>
 </section>
 
-<!-- CTA -->
-<section class="about-cta">
-  <div class="about-cta-inner">
-    <h2 class="reveal">Join the HomeBites family</h2>
-    <p class="reveal delay-1">Download the app free, tell Mama AI about your household, and never stress about dinner again.</p>
-    <div class="cta-buttons reveal delay-2">
-      <a href="index.html#download" class="btn-white">🍎 Download App</a>
-      <a href="support.html" class="btn-outline-white">Get Support</a>
+<section class="ab-cta">
+  <div class="ab-cta-inner">
+    <h2 class="sh" data-r>Join the HomeBites family</h2>
+    <p class="sb" data-r data-d="1">Download the app free, tell Mama AI about your household, and never stress about dinner again.</p>
+    <div class="cta-btns" data-r data-d="2">
+      <a href="index.html#download" class="btn-w">Download App</a>
+      <a href="support.html" class="btn-ow">Get Support</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-logo">
           <img src="assets/mascot.png" alt="HomeBites" />
           <span>HomeBites</span>
         </div>
-        <p class="footer-tagline">AI-powered meal planning built for Kenyan families. Never wonder what to cook again.</p>
+        <p class="ft-tag">AI-powered meal planning built for Kenyan families. Never wonder what to cook again.</p>
       </div>
-      <div class="footer-links">
-        <div class="footer-col">
+      <div class="ft-links">
+        <div class="ft-col">
           <h4>App</h4>
           <a href="index.html#features">Features</a>
           <a href="index.html#how">How it works</a>
           <a href="index.html#recipes">Recipes</a>
           <a href="index.html#download">Download</a>
         </div>
-        <div class="footer-col">
+        <div class="ft-col">
           <h4>Company</h4>
           <a href="about.html">About</a>
           <a href="support.html">Support</a>
           <a href="mailto:hello@homebites.app">Contact</a>
         </div>
-        <div class="footer-col">
+        <div class="ft-col">
           <h4>Legal</h4>
           <a href="privacy-policy.html">Privacy Policy</a>
           <a href="terms-of-service.html">Terms of Service</a>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="ft-bot">
       <p>© 2025 HomeBites. Made with ❤️ for Kenya.</p>
-      <div class="footer-socials">
-        <a href="#" class="social-link" title="Instagram">📸</a>
-        <a href="#" class="social-link" title="Twitter / X">🐦</a>
-        <a href="#" class="social-link" title="TikTok">🎵</a>
+      <div class="ft-soc">
+        <a href="#" class="ft-s" title="Instagram">📸</a>
+        <a href="#" class="ft-s" title="Twitter / X">🐦</a>
+        <a href="#" class="ft-s" title="TikTok">🎵</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => obs.observe(el));
+  const cd = document.getElementById('cd'), cr = document.getElementById('cr');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cd.style.left = mx+'px'; cd.style.top = my+'px'; }, { passive: true });
+  (function raf(){ rx += (mx-rx)*.12; ry += (my-ry)*.12; cr.style.left = rx+'px'; cr.style.top = ry+'px'; requestAnimationFrame(raf); })();
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
+  });
 
-  document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 2;
-    const y = (e.clientY / window.innerHeight - 0.5) * 2;
-    document.querySelectorAll('.blob').forEach((blob, i) => {
-      const d = (i + 1) * 10;
-      blob.style.transform = `translate(${x * d}px, ${y * d}px)`;
-    });
+  const pbar = document.getElementById('pbar');
+  window.addEventListener('scroll', () => {
+    pbar.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
   }, { passive: true });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('stuck', scrollY > 60); }, { passive: true });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('[data-r]').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>

@@ -8,482 +8,433 @@
   <link rel="icon" href="assets/mascot.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary:       #FF8C61;
-      --primary-dark:  #E85D3F;
-      --primary-light: #FFD4C2;
-      --secondary:     #8FB996;
-      --secondary-dark:#6B9B73;
-      --accent:        #FFC857;
-      --bg:            #FFF8F3;
-      --surface:       #FFFFFF;
-      --surface-warm:  #F5EDE6;
-      --text:          #2D3748;
-      --text-muted:    #718096;
-      --radius:        16px;
-      --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
-      --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#FFF8F3;--bg2:#F5EDE6;--bg3:#FAEEE5;--bg4:#FFE4D6;
+      --surface:#FFFFFF;
+      --orange:#FF8C61;--orange-d:#E85D3F;--orange-l:#FFD4C2;
+      --og:rgba(255,140,97,0.28);
+      --green:#8FB996;--green-d:#6B9B73;--gold:#FFC857;
+      --dark:#1E1209;--dark2:#2A1A0E;
+      --text:#2D3748;--muted:rgba(45,55,72,0.52);--ondk:#FFF8F3;
+      --serif:'Playfair Display',Georgia,serif;
+      --mono:'Space Mono','Courier New',monospace;
+      --sans:'Sora',sans-serif;
+      --h2:clamp(24px,3.5vw,46px);
+      --gutter:clamp(24px,5vw,72px);--section:clamp(80px,10vw,140px);--wrap:1200px;
+      --ease:cubic-bezier(.25,.46,.45,.94);--spring:cubic-bezier(.34,1.56,.64,1);--enter:cubic-bezier(.16,1,.3,1);
     }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-    h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:var(--mono);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+    @media(pointer:coarse){body{cursor:auto}}
+    img{max-width:100%}
 
-    /* SCROLL REVEAL */
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .delay-1 { transition-delay: 0.1s !important; }
-    .delay-2 { transition-delay: 0.2s !important; }
-    .delay-3 { transition-delay: 0.35s !important; }
+    #cd,#cr{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+    #cd{width:6px;height:6px;background:var(--orange)}
+    #cr{width:30px;height:30px;border:1.5px solid rgba(255,140,97,.5);transition:width .3s,height .3s,background .3s,border-color .3s}
+    body.hov #cd{transform:translate(-50%,-50%) scale(0)}
+    body.hov #cr{width:48px;height:48px;border-color:var(--orange);background:rgba(255,140,97,.08)}
+    @media(pointer:coarse){#cd,#cr{display:none}}
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 48px;
-      background: rgba(255,248,243,0.9);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
-    .nav-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: var(--primary-dark); }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 15px; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--primary-dark); }
-    .nav-cta {
-      background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 10px 24px;
-      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px;
-      cursor: pointer; text-decoration: none; box-shadow: 0 4px 16px rgba(255,140,97,0.35);
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-    }
-    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,140,97,0.45); }
-    @media (max-width: 768px) { nav { padding: 14px 20px; } .nav-links { display: none; } }
+    #prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:500}
+    #pbar{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--gold),var(--green));transition:width .1s linear}
 
-    .page-hero {
-      padding: 140px 48px 80px;
-      background: linear-gradient(135deg, #FFF8F3 0%, #FFD4C2 50%, #C5E1C8 100%);
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .page-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(255,200,150,0.3) 0%, transparent 70%);
-    }
-    .page-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
-    .page-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,140,97,0.12); border: 1px solid rgba(255,140,97,0.3);
-      border-radius: 50px; padding: 6px 16px; margin-bottom: 20px;
-      font-size: 13px; font-weight: 600; color: var(--primary-dark);
-    }
-    .page-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 16px; }
-    .page-hero p { font-size: 17px; color: var(--text-muted); line-height: 1.7; }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px var(--gutter);transition:background .4s,padding .3s,box-shadow .4s}
+    nav.stuck{background:rgba(255,248,243,.92);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);padding:14px var(--gutter);box-shadow:0 1px 0 rgba(255,140,97,.15),0 4px 32px rgba(45,55,72,.08)}
+    .nl{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nl img{width:34px;height:34px;object-fit:contain}
+    .nl span{font-family:var(--sans);font-weight:800;font-size:19px;color:var(--orange-d)}
+    .nlinks{display:flex;align-items:center;gap:32px}
+    .nlinks a{font-family:var(--mono);font-size:11px;text-decoration:none;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
+    .nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+    .nlinks a:hover{color:var(--text)}
+    .nlinks a:hover::after{transform:scaleX(1)}
+    .ncta{font-family:var(--sans);font-size:13px;font-weight:700;background:var(--orange);color:#fff;border:none;border-radius:999px;padding:10px 24px;text-decoration:none;cursor:none;box-shadow:0 4px 20px var(--og);transition:transform .25s var(--spring),box-shadow .25s}
+    .ncta:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 10px 32px rgba(255,140,97,.45)}
+    @media(max-width:768px){nav{padding:16px 24px}nav.stuck{padding:12px 24px}.nlinks{display:none}}
 
-    /* CONTACT CARDS */
-    .contact-section { padding: 72px 48px 48px; max-width: 1100px; margin: 0 auto; }
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 40px; }
-    .contact-card {
-      background: var(--surface); border-radius: 20px;
-      padding: 32px 28px; text-align: center;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      border: 1px solid rgba(255,140,97,0.1);
-      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
-    }
-    .contact-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(255,140,97,0.15); }
-    .contact-icon { font-size: 40px; margin-bottom: 16px; }
-    .contact-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .contact-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
-    .contact-btn {
-      display: inline-block; background: var(--primary); color: #fff;
-      border-radius: 50px; padding: 10px 24px; text-decoration: none;
-      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px;
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-      box-shadow: 0 4px 16px rgba(255,140,97,0.3);
-    }
-    .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,140,97,0.4); }
-    .contact-btn.secondary {
-      background: transparent; color: var(--primary-dark);
-      border: 2px solid var(--primary); box-shadow: none;
-    }
-    .contact-btn.secondary:hover { background: rgba(255,140,97,0.08); box-shadow: none; }
+    .gbg{position:absolute;inset:0;z-index:0;background:linear-gradient(-45deg,#FFF8F3,#FFE4D6,#FFF0E8,#FFD4C2,#FFEADD,#FFF8F3);background-size:400% 400%;animation:gShift 18s ease infinite}
+    @keyframes gShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .gorb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+    .go-o{width:500px;height:500px;background:rgba(255,140,97,.18);top:-100px;right:-60px;animation:gorbF 14s ease-in-out infinite}
+    .go-g{width:380px;height:380px;background:rgba(143,185,150,.13);bottom:-60px;left:-50px;animation:gorbF 10s ease-in-out 4s infinite reverse}
+    @keyframes gorbF{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(20px,-24px) scale(1.05)}66%{transform:translate(-16px,18px) scale(.97)}}
+    .grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 
-    /* FAQ */
-    .faq-section { padding: 48px 48px 80px; max-width: 800px; margin: 0 auto; }
-    .faq-section > h2 { font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 8px; }
-    .faq-section > p { text-align: center; color: var(--text-muted); margin-bottom: 48px; }
-    .faq-category { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary-dark); margin-top: 40px; margin-bottom: 16px; }
-    .faq-item {
-      background: var(--surface); border-radius: 14px;
-      border: 1px solid rgba(0,0,0,0.07);
-      margin-bottom: 12px; overflow: hidden;
-      transition: box-shadow 0.2s;
-    }
-    .faq-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
-    .faq-question {
-      width: 100%; text-align: left; background: none; border: none;
-      padding: 20px 24px; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      font-family: 'Sora', sans-serif; font-weight: 600; font-size: 15px; color: var(--text);
-      transition: color 0.2s;
-    }
-    .faq-question:hover { color: var(--primary-dark); }
-    .faq-chevron {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--surface-warm); display: flex; align-items: center; justify-content: center;
-      font-size: 12px; flex-shrink: 0;
-      transition: transform 0.3s var(--ease-cinematic), background 0.2s;
-    }
-    .faq-item.open .faq-chevron { transform: rotate(180deg); background: var(--primary-light); }
-    .faq-answer {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.4s var(--ease-cinematic), padding 0.3s;
-    }
-    .faq-item.open .faq-answer { max-height: 600px; }
-    .faq-answer-inner {
-      padding: 0 24px 20px;
-      font-size: 15px; line-height: 1.8; color: #4A5568;
-    }
-    .faq-answer-inner a { color: var(--primary-dark); }
-    .faq-answer-inner ul { padding-left: 20px; margin-top: 8px; }
-    .faq-answer-inner li { margin-bottom: 6px; }
+    .stag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-d);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .stag::before{content:'';width:20px;height:1px;background:var(--orange)}
+    .sh{font-family:var(--serif);font-size:var(--h2);font-weight:900;line-height:1.1;letter-spacing:-.022em;color:var(--text)}
+    .sb{font-family:var(--mono);font-size:14px;line-height:1.85;color:var(--muted)}
 
-    /* RESPONSE TIME BADGE */
-    .response-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(143,185,150,0.15); border: 1px solid rgba(143,185,150,0.4);
-      border-radius: 50px; padding: 8px 18px; margin-top: 24px;
-      font-size: 13px; font-weight: 600; color: var(--secondary-dark);
-    }
-    .response-dot { width: 8px; height: 8px; background: var(--secondary-dark); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:0.7} }
+    [data-r]{opacity:0;transform:translateY(44px);transition:opacity .9s var(--enter),transform .9s var(--enter)}
+    [data-r=l]{transform:translateX(-50px)}
+    [data-r=r]{transform:translateX(50px)}
+    [data-r=s]{transform:scale(.9);transition:opacity .9s var(--enter),transform .9s var(--spring)}
+    [data-r].in{opacity:1;transform:none}
+    [data-d="1"]{transition-delay:.1s!important}[data-d="2"]{transition-delay:.22s!important}
+    [data-d="3"]{transition-delay:.36s!important}[data-d="4"]{transition-delay:.52s!important}
 
-    footer { background: var(--text); color: rgba(255,255,255,0.75); padding: 60px 48px 32px; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-top { display: flex; justify-content: space-between; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
-    .footer-brand { max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .footer-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
-    .footer-logo span { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; color: #fff; }
-    .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); }
-    .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
-    .footer-col h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--primary); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { font-size: 14px; color: rgba(255,255,255,0.4); }
-    .footer-socials { display: flex; gap: 12px; }
-    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; transition: background 0.2s; }
-    .social-link:hover { background: rgba(255,140,97,0.25); }
-    @media (max-width: 768px) {
-      .page-hero { padding: 120px 24px 60px; }
-      .contact-section, .faq-section { padding-left: 24px; padding-right: 24px; }
-      footer { padding: 48px 24px 24px; }
-      .footer-top { flex-direction: column; gap: 32px; }
-    }
+    .ph{padding:160px var(--gutter) 100px;position:relative;overflow:hidden;text-align:center}
+    .ph-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+    .ph-cap{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-d);display:inline-flex;align-items:center;gap:8px;background:rgba(255,140,97,.1);border:1px solid rgba(255,140,97,.25);border-radius:999px;padding:6px 16px;margin-bottom:24px}
+    .ph-h1{font-family:var(--serif);font-size:clamp(36px,5.5vw,64px);font-weight:900;font-style:italic;line-height:1.0;letter-spacing:-.025em;color:var(--text);margin-bottom:20px}
+    .ph-sub{font-family:var(--mono);font-size:14px;line-height:1.85;color:var(--muted);max-width:520px;margin:0 auto 28px}
+    .resp-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(143,185,150,.15);border:1px solid rgba(143,185,150,.38);border-radius:999px;padding:8px 18px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--green-d)}
+    .rdot{width:7px;height:7px;background:var(--green-d);border-radius:50%;animation:rdPulse 2s infinite}
+    @keyframes rdPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+
+    .contact-sec{padding:var(--section) 0;background:var(--bg)}
+    .contact-inner{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+    .contact-hd{text-align:center;margin-bottom:56px}
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .cc{background:var(--surface);border-radius:24px;padding:40px 32px;text-align:center;box-shadow:0 4px 32px rgba(45,55,72,.07);border:1px solid rgba(255,140,97,.1);transition:transform .3s var(--spring),box-shadow .3s}
+    .cc:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(255,140,97,.14)}
+    .cc-icon{font-size:42px;margin-bottom:18px;display:block}
+    .cc h3{font-family:var(--serif);font-size:22px;font-weight:800;color:var(--text);margin-bottom:10px}
+    .cc p{font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--muted);margin-bottom:24px}
+    .cc-btn{display:inline-block;background:var(--orange);color:#fff;border-radius:999px;padding:10px 26px;text-decoration:none;font-family:var(--sans);font-weight:700;font-size:13px;box-shadow:0 4px 18px rgba(255,140,97,.3);transition:transform .2s var(--spring),box-shadow .2s;cursor:none}
+    .cc-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,140,97,.42)}
+    .cc-btn.sec{background:transparent;color:var(--orange-d);border:2px solid rgba(255,140,97,.4);box-shadow:none}
+    .cc-btn.sec:hover{background:rgba(255,140,97,.08);border-color:var(--orange);box-shadow:none}
+
+    .faq-sec{padding:0 0 var(--section);background:var(--bg)}
+    .faq-inner{max-width:800px;margin:0 auto;padding:0 var(--gutter)}
+    .faq-hd{text-align:center;margin-bottom:64px}
+    .faq-cat{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-d);margin-top:48px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+    .faq-cat::before{content:'';width:20px;height:1px;background:var(--orange)}
+    .faq-item{background:var(--surface);border-radius:16px;border:1px solid rgba(45,55,72,.07);margin-bottom:10px;overflow:hidden;transition:box-shadow .2s}
+    .faq-item:hover{box-shadow:0 4px 24px rgba(45,55,72,.08)}
+    .faq-question{width:100%;text-align:left;background:none;border:none;padding:20px 24px;cursor:none;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--sans);font-weight:600;font-size:15px;color:var(--text);transition:color .2s}
+    .faq-question:hover{color:var(--orange-d)}
+    .faq-chevron{width:26px;height:26px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:transform .3s var(--ease),background .2s}
+    .faq-item.open .faq-chevron{transform:rotate(180deg);background:var(--orange-l)}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+    .faq-item.open .faq-answer{max-height:600px}
+    .faq-ans-inner{padding:0 24px 22px;font-family:var(--mono);font-size:13px;line-height:1.85;color:var(--muted)}
+    .faq-ans-inner a{color:var(--orange-d)}
+    .faq-ans-inner ul{padding-left:20px;margin-top:10px}
+    .faq-ans-inner li{margin-bottom:7px}
+
+    footer{background:var(--dark);color:rgba(255,248,243,.6);padding:72px var(--gutter) 32px;border-top:3px solid var(--orange)}
+    .ft-inner{max-width:var(--wrap);margin:0 auto}
+    .ft-top{display:flex;justify-content:space-between;gap:48px;margin-bottom:56px;flex-wrap:wrap}
+    .ft-brand{max-width:300px}
+    .ft-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .ft-logo img{width:34px;height:34px;object-fit:contain}
+    .ft-logo span{font-family:var(--sans);font-weight:800;font-size:19px;color:var(--ondk)}
+    .ft-tag{font-family:var(--mono);font-size:13px;line-height:1.75;color:rgba(255,248,243,.42)}
+    .ft-links{display:flex;gap:48px;flex-wrap:wrap}
+    .ft-col h4{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-l);margin-bottom:18px}
+    .ft-col a{display:block;font-family:var(--mono);font-size:13px;color:rgba(255,248,243,.42);text-decoration:none;margin-bottom:10px;transition:color .2s}
+    .ft-col a:hover{color:var(--orange)}
+    .ft-bot{border-top:1px solid rgba(255,248,243,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .ft-bot p{font-family:var(--mono);font-size:12px;color:rgba(255,248,243,.28)}
+    .ft-soc{display:flex;gap:10px}
+    .ft-s{width:34px;height:34px;border-radius:50%;background:rgba(255,248,243,.06);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:15px;transition:background .2s}
+    .ft-s:hover{background:rgba(255,140,97,.2)}
+    @media(max-width:768px){footer{padding:48px 24px 24px}.ft-top{flex-direction:column;gap:32px}.ph{padding:130px 24px 80px}}
   </style>
 </head>
 <body>
+<div id="cd"></div><div id="cr"></div>
+<div id="prog"><div id="pbar"></div></div>
 
-<nav>
-  <a href="index.html" class="nav-logo">
+<nav id="nav">
+  <a href="index.html" class="nl">
     <img src="assets/mascot.png" alt="HomeBites" />
     <span>HomeBites</span>
   </a>
-  <div class="nav-links">
+  <div class="nlinks">
     <a href="index.html#features">Features</a>
     <a href="index.html#how">How it works</a>
     <a href="about.html">About</a>
     <a href="support.html">Support</a>
   </div>
-  <a href="index.html#download" class="nav-cta">Download App</a>
+  <a href="index.html#download" class="ncta">Download App</a>
 </nav>
 
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-eyebrow">Help Centre</div>
-    <h1>We're here to help</h1>
-    <p>Got a question about HomeBites? Browse the FAQs below or reach out to us directly — we respond to every message.</p>
-    <div class="response-badge"><div class="response-dot"></div> Average response time: under 24 hours</div>
+<section class="ph">
+  <div class="gbg"></div>
+  <div class="gorb go-o"></div>
+  <div class="gorb go-g"></div>
+  <div class="grain"></div>
+  <div class="ph-inner">
+    <div class="ph-cap">Help Centre</div>
+    <h1 class="ph-h1">We're here to help</h1>
+    <p class="ph-sub">Got a question about HomeBites? Browse the FAQs below or reach out to us directly — we respond to every message.</p>
+    <div class="resp-badge"><div class="rdot"></div> Average response time: under 24 hours</div>
   </div>
 </section>
 
-<!-- CONTACT CARDS -->
-<section class="contact-section">
-  <p class="page-eyebrow reveal" style="text-align:center;display:block;margin-bottom:8px">Contact us</p>
-  <h2 style="font-size:28px;font-weight:800;text-align:center" class="reveal delay-1">Choose how to reach us</h2>
-  <div class="contact-grid">
-    <div class="contact-card reveal delay-1">
-      <div class="contact-icon">📧</div>
-      <h3>Email Support</h3>
-      <p>Reach our team directly for account issues, bug reports, or anything else.</p>
-      <a href="mailto:hello@homebites.app" class="contact-btn">hello@homebites.app</a>
+<section class="contact-sec">
+  <div class="contact-inner">
+    <div class="contact-hd">
+      <div class="stag" style="justify-content:center" data-r>Contact us</div>
+      <h2 class="sh" data-r data-d="1">Choose how to reach us</h2>
     </div>
-    <div class="contact-card reveal delay-2">
-      <div class="contact-icon">🐦</div>
-      <h3>Twitter / X</h3>
-      <p>Quick questions and community chat — follow us for updates and tips.</p>
-      <a href="#" class="contact-btn secondary">@HomeBitesApp</a>
-    </div>
-    <div class="contact-card reveal delay-3">
-      <div class="contact-icon">📸</div>
-      <h3>Instagram</h3>
-      <p>Share your HomeBites meals and tag us. We love seeing Kenyan kitchens in action.</p>
-      <a href="#" class="contact-btn secondary">@HomeBitesApp</a>
+    <div class="contact-grid">
+      <div class="cc" data-r data-d="1">
+        <span class="cc-icon">📧</span>
+        <h3>Email Support</h3>
+        <p>Reach our team directly for account issues, bug reports, or anything else.</p>
+        <a href="mailto:hello@homebites.app" class="cc-btn">hello@homebites.app</a>
+      </div>
+      <div class="cc" data-r data-d="2">
+        <span class="cc-icon">🐦</span>
+        <h3>Twitter / X</h3>
+        <p>Quick questions and community chat — follow us for updates and tips.</p>
+        <a href="#" class="cc-btn sec">@HomeBitesApp</a>
+      </div>
+      <div class="cc" data-r data-d="3">
+        <span class="cc-icon">📸</span>
+        <h3>Instagram</h3>
+        <p>Share your HomeBites meals and tag us. We love seeing Kenyan kitchens in action.</p>
+        <a href="#" class="cc-btn sec">@HomeBitesApp</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="faq-section">
-  <h2 class="reveal">Frequently Asked Questions</h2>
-  <p class="reveal delay-1">Find answers to the most common questions about HomeBites.</p>
+<section class="faq-sec">
+  <div class="faq-inner">
+    <div class="faq-hd">
+      <div class="stag" style="justify-content:center" data-r>Knowledge base</div>
+      <h2 class="sh" data-r data-d="1">Frequently Asked Questions</h2>
+      <p class="sb" style="text-align:center;margin-top:14px" data-r data-d="2">Find answers to the most common questions about HomeBites.</p>
+    </div>
 
-  <!-- Getting Started -->
-  <p class="faq-category reveal">Getting Started</p>
+    <p class="faq-cat" data-r>Getting Started</p>
 
-  <div class="faq-item reveal">
-    <button class="faq-question" aria-expanded="false">
-      What is HomeBites and who is it for?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        HomeBites is an AI-powered meal planning app designed specifically for Kenyan families and households. It helps you decide what to cook each day, builds your weekly meal plan, generates grocery lists, and tracks your food budget — all guided by Mama AI, our Kenyan kitchen-savvy assistant.
+    <div class="faq-item" data-r>
+      <button class="faq-question" aria-expanded="false">
+        What is HomeBites and who is it for?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">HomeBites is an AI-powered meal planning app designed specifically for Kenyan families and households. It helps you decide what to cook each day, builds your weekly meal plan, generates grocery lists, and tracks your food budget — all guided by Mama AI, our Kenyan kitchen-savvy assistant.</div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-1">
-    <button class="faq-question" aria-expanded="false">
-      Is HomeBites free to use?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Yes — HomeBites is completely free to download and use. All core features including meal planning, Mama AI, grocery lists, and budget tracking are available at no cost. We may introduce optional premium features in the future, but the core experience will always remain free.
+    <div class="faq-item" data-r data-d="1">
+      <button class="faq-question" aria-expanded="false">
+        Is HomeBites free to use?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Yes — HomeBites is completely free to download and use. All core features including meal planning, Mama AI, grocery lists, and budget tracking are available at no cost. We may introduce optional premium features in the future, but the core experience will always remain free.</div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-2">
-    <button class="faq-question" aria-expanded="false">
-      Do I need to create an account?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        No — you can try HomeBites in Guest Mode without signing up. Guest mode stores your data locally on your device. To sync your meal plans across devices, save your history long-term, and get a personalised experience from Mama AI, we recommend creating a free account. You can sign up with your email address or via Google/Apple sign-in.
+    <div class="faq-item" data-r data-d="2">
+      <button class="faq-question" aria-expanded="false">
+        Do I need to create an account?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">No — you can try HomeBites in Guest Mode without signing up. Guest mode stores your data locally on your device. To sync your meal plans across devices, save your history long-term, and get a personalised experience from Mama AI, we recommend creating a free account. You can sign up with your email address or via Google/Apple sign-in.</div>
       </div>
     </div>
-  </div>
 
-  <!-- Mama AI -->
-  <p class="faq-category reveal">Mama AI</p>
+    <p class="faq-cat" data-r>Mama AI</p>
 
-  <div class="faq-item reveal">
-    <button class="faq-question" aria-expanded="false">
-      What can I ask Mama AI?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Mama AI is your Kenyan cooking companion. You can ask her things like:
-        <ul>
-          <li>"What should I cook tonight for 4 people under KES 500?"</li>
-          <li>"I have ugali, sukuma wiki and tomatoes — what can I make?"</li>
-          <li>"Plan my meals for this week on a KES 6,000 budget."</li>
-          <li>"How do I make soft chapati?"</li>
-          <li>"Give me a healthy breakfast for my kids."</li>
-        </ul>
-        She understands Kenyan dishes, local ingredients, and budget constraints.
+    <div class="faq-item" data-r>
+      <button class="faq-question" aria-expanded="false">
+        What can I ask Mama AI?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Mama AI is your Kenyan cooking companion. You can ask her things like:
+          <ul>
+            <li>"What should I cook tonight for 4 people under KES 500?"</li>
+            <li>"I have ugali, sukuma wiki and tomatoes — what can I make?"</li>
+            <li>"Plan my meals for this week on a KES 6,000 budget."</li>
+            <li>"How do I make soft chapati?"</li>
+            <li>"Give me a healthy breakfast for my kids."</li>
+          </ul>
+          She understands Kenyan dishes, local ingredients, and budget constraints.
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-1">
-    <button class="faq-question" aria-expanded="false">
-      Why is Mama AI not responding?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Mama AI requires an internet connection. If she's not responding, try these steps:
-        <ul>
-          <li>Check that your phone has an active internet connection (Wi-Fi or mobile data).</li>
-          <li>Close and reopen the app, then try your question again.</li>
-          <li>If the issue persists for more than a few minutes, our AI service may be temporarily unavailable — please try again later or email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a>.</li>
-        </ul>
+    <div class="faq-item" data-r data-d="1">
+      <button class="faq-question" aria-expanded="false">
+        Why is Mama AI not responding?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Mama AI requires an internet connection. If she's not responding, try these steps:
+          <ul>
+            <li>Check that your phone has an active internet connection (Wi-Fi or mobile data).</li>
+            <li>Close and reopen the app, then try your question again.</li>
+            <li>If the issue persists for more than a few minutes, our AI service may be temporarily unavailable — please try again later or email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a>.</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-2">
-    <button class="faq-question" aria-expanded="false">
-      Is my chat history with Mama AI private?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Yes. Your chat history is stored in your private, authenticated Firebase account — only you can access it. Messages are sent to our secure Cloud Function backend before reaching Google Gemini; the API key is never stored in the app itself. We do not use your chat data to train AI models. See our <a href="privacy-policy.html">Privacy Policy</a> for full details.
+    <div class="faq-item" data-r data-d="2">
+      <button class="faq-question" aria-expanded="false">
+        Is my chat history with Mama AI private?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Yes. Your chat history is stored in your private, authenticated Firebase account — only you can access it. Messages are sent to our secure Cloud Function backend before reaching Google Gemini; the API key is never stored in the app itself. We do not use your chat data to train AI models. See our <a href="privacy-policy.html">Privacy Policy</a> for full details.</div>
       </div>
     </div>
-  </div>
 
-  <!-- Meal Planning -->
-  <p class="faq-category reveal">Meal Planning</p>
+    <p class="faq-cat" data-r>Meal Planning</p>
 
-  <div class="faq-item reveal">
-    <button class="faq-question" aria-expanded="false">
-      How do I set up my weekly meal plan?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Tap the <strong>Planner</strong> tab at the bottom of the app. You'll see a 7-day calendar. Tap any meal slot (breakfast, lunch, or dinner) to add a recipe — you can search the recipe library, use a suggestion from Mama AI, or add your own. Your plan auto-generates a shopping list from the ingredients in your scheduled recipes.
+    <div class="faq-item" data-r>
+      <button class="faq-question" aria-expanded="false">
+        How do I set up my weekly meal plan?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Tap the <strong>Planner</strong> tab at the bottom of the app. You'll see a 7-day calendar. Tap any meal slot (breakfast, lunch, or dinner) to add a recipe — you can search the recipe library, use a suggestion from Mama AI, or add your own. Your plan auto-generates a shopping list from the ingredients in your scheduled recipes.</div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-1">
-    <button class="faq-question" aria-expanded="false">
-      Can I plan for different family members with different preferences?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Yes — use the <strong>Family Management</strong> feature in your Profile to add household members and set their dietary preferences or restrictions. Mama AI will factor these in when suggesting meals for the household.
+    <div class="faq-item" data-r data-d="1">
+      <button class="faq-question" aria-expanded="false">
+        Can I plan for different family members with different preferences?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Yes — use the <strong>Family Management</strong> feature in your Profile to add household members and set their dietary preferences or restrictions. Mama AI will factor these in when suggesting meals for the household.</div>
       </div>
     </div>
-  </div>
 
-  <!-- Account & Data -->
-  <p class="faq-category reveal">Account & Data</p>
+    <p class="faq-cat" data-r>Account & Data</p>
 
-  <div class="faq-item reveal">
-    <button class="faq-question" aria-expanded="false">
-      How do I change my email address or password?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Go to <strong>Profile → Edit Profile</strong> to update your name and preferences. To change your email or password, go to <strong>Profile → Settings → Account</strong>. If you signed in with Google or Apple, your email is managed by those services.
+    <div class="faq-item" data-r>
+      <button class="faq-question" aria-expanded="false">
+        How do I change my email address or password?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Go to <strong>Profile → Edit Profile</strong> to update your name and preferences. To change your email or password, go to <strong>Profile → Settings → Account</strong>. If you signed in with Google or Apple, your email is managed by those services.</div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-1">
-    <button class="faq-question" aria-expanded="false">
-      How do I delete my account and all my data?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        You can delete your account from <strong>Profile → Settings → Delete Account</strong>. This permanently removes your profile, meal plans, grocery lists, chat history, and all associated data from our servers within 30 days. This action cannot be undone.
-        <br/><br/>
-        Alternatively, email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a> and we'll process the deletion manually.
+    <div class="faq-item" data-r data-d="1">
+      <button class="faq-question" aria-expanded="false">
+        How do I delete my account and all my data?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">You can delete your account from <strong>Profile → Settings → Delete Account</strong>. This permanently removes your profile, meal plans, grocery lists, chat history, and all associated data from our servers within 30 days. This action cannot be undone.<br/><br/>Alternatively, email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a> and we'll process the deletion manually.</div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-2">
-    <button class="faq-question" aria-expanded="false">
-      My data isn't syncing across devices — what should I do?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Make sure you're signed in with the same account on both devices. Data sync requires an active internet connection. Try pulling down to refresh on the main screen. If the problem persists, sign out and sign back in, or contact us at <a href="mailto:hello@homebites.app">hello@homebites.app</a>.
+    <div class="faq-item" data-r data-d="2">
+      <button class="faq-question" aria-expanded="false">
+        My data isn't syncing across devices — what should I do?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Make sure you're signed in with the same account on both devices. Data sync requires an active internet connection. Try pulling down to refresh on the main screen. If the problem persists, sign out and sign back in, or contact us at <a href="mailto:hello@homebites.app">hello@homebites.app</a>.</div>
       </div>
     </div>
-  </div>
 
-  <!-- Bugs & Feedback -->
-  <p class="faq-category reveal">Bugs & Feedback</p>
+    <p class="faq-cat" data-r>Bugs & Feedback</p>
 
-  <div class="faq-item reveal">
-    <button class="faq-question" aria-expanded="false">
-      I found a bug — how do I report it?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        We'd love to know! Email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a> with:
-        <ul>
-          <li>What you were trying to do when the bug happened.</li>
-          <li>What you expected vs what actually happened.</li>
-          <li>Your device model and iOS/Android version.</li>
-          <li>A screenshot if you have one.</li>
-        </ul>
-        We typically acknowledge bug reports within 24 hours.
+    <div class="faq-item" data-r>
+      <button class="faq-question" aria-expanded="false">
+        I found a bug — how do I report it?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">We'd love to know! Email us at <a href="mailto:hello@homebites.app">hello@homebites.app</a> with:
+          <ul>
+            <li>What you were trying to do when the bug happened.</li>
+            <li>What you expected vs what actually happened.</li>
+            <li>Your device model and iOS/Android version.</li>
+            <li>A screenshot if you have one.</li>
+          </ul>
+          We typically acknowledge bug reports within 24 hours.
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="faq-item reveal delay-1">
-    <button class="faq-question" aria-expanded="false">
-      Can I request a new feature or Kenyan recipe?
-      <span class="faq-chevron">▾</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">
-        Absolutely — we love hearing from our community. Send recipe requests and feature ideas to <a href="mailto:hello@homebites.app">hello@homebites.app</a>. We're particularly keen to add more regional Kenyan dishes (coastal, Rift Valley, Western Kenya specialties) and improve Mama AI's understanding of local substitutions and seasonal ingredients.
+    <div class="faq-item" data-r data-d="1">
+      <button class="faq-question" aria-expanded="false">
+        Can I request a new feature or Kenyan recipe?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-ans-inner">Absolutely — we love hearing from our community. Send recipe requests and feature ideas to <a href="mailto:hello@homebites.app">hello@homebites.app</a>. We're particularly keen to add more regional Kenyan dishes (coastal, Rift Valley, Western Kenya specialties) and improve Mama AI's understanding of local substitutions and seasonal ingredients.</div>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-logo">
           <img src="assets/mascot.png" alt="HomeBites" />
           <span>HomeBites</span>
         </div>
-        <p class="footer-tagline">AI-powered meal planning built for Kenyan families. Never wonder what to cook again.</p>
+        <p class="ft-tag">AI-powered meal planning built for Kenyan families. Never wonder what to cook again.</p>
       </div>
-      <div class="footer-links">
-        <div class="footer-col">
+      <div class="ft-links">
+        <div class="ft-col">
           <h4>App</h4>
           <a href="index.html#features">Features</a>
           <a href="index.html#how">How it works</a>
           <a href="index.html#recipes">Recipes</a>
           <a href="index.html#download">Download</a>
         </div>
-        <div class="footer-col">
+        <div class="ft-col">
           <h4>Company</h4>
           <a href="about.html">About</a>
           <a href="support.html">Support</a>
           <a href="mailto:hello@homebites.app">Contact</a>
         </div>
-        <div class="footer-col">
+        <div class="ft-col">
           <h4>Legal</h4>
           <a href="privacy-policy.html">Privacy Policy</a>
           <a href="terms-of-service.html">Terms of Service</a>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="ft-bot">
       <p>© 2025 HomeBites. Made with ❤️ for Kenya.</p>
-      <div class="footer-socials">
-        <a href="#" class="social-link" title="Instagram">📸</a>
-        <a href="#" class="social-link" title="Twitter / X">🐦</a>
-        <a href="#" class="social-link" title="TikTok">🎵</a>
+      <div class="ft-soc">
+        <a href="#" class="ft-s" title="Instagram">📸</a>
+        <a href="#" class="ft-s" title="Twitter / X">🐦</a>
+        <a href="#" class="ft-s" title="TikTok">🎵</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-  const revealEls = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-  revealEls.forEach(el => obs.observe(el));
+  const cd = document.getElementById('cd'), cr = document.getElementById('cr');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cd.style.left = mx+'px'; cd.style.top = my+'px'; }, { passive: true });
+  (function raf(){ rx += (mx-rx)*.12; ry += (my-ry)*.12; cr.style.left = rx+'px'; cr.style.top = ry+'px'; requestAnimationFrame(raf); })();
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
+  });
 
-  // FAQ accordion
+  const pbar = document.getElementById('pbar');
+  window.addEventListener('scroll', () => {
+    pbar.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+  }, { passive: true });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('stuck', scrollY > 60); }, { passive: true });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('[data-r]').forEach(el => obs.observe(el));
+
   document.querySelectorAll('.faq-question').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item');
